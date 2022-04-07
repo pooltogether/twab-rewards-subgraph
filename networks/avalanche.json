@@ -1,0 +1,7 @@
+{
+    "network": "avalanche",
+    "TWABRewards": {
+        "address": "0x46d2f8e4D8Ff3d76cf252D89dD9b422f04123D2c",
+        "startBlock": "10626098"
+    }
+}

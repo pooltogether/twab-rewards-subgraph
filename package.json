@@ -1,0 +1,39 @@
+{
+    "name": "twab-subgraph",
+    "license": "GPL-3.0",
+    "version": "1.0.0",
+    "scripts": {
+        "reinstall": "rm -rf node_modules/ && yarn",
+        "clean": "rm -rf build/ generated/",
+        "format": "prettier --config .prettierrc --write \"**/*.{ts,js}\"",
+        "format:file": "prettier --config .prettierrc --write",
+        "prepare:mainnet": "mustache networks/mainnet.json subgraph.template.yaml subgraph.mainnet.yaml",
+        "prepare:polygon": "mustache networks/polygon.json subgraph.template.yaml subgraph.polygon.yaml",
+        "prepare:avalanche": "mustache networks/avalanche.json subgraph.template.yaml subgraph.avalanche.yaml",
+        "gen:mainnet": "graph codegen subgraph.mainnet.yaml",
+        "gen:polygon": "graph codegen subgraph.polygon.yaml",
+        "gen:avalanche": "graph codegen subgraph.avalanche.yaml",
+        "deploy:mainnet": "graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ pooltogether/mainnet-twab-rewards subgraph.mainnet.yaml",
+        "deploy:polygon": "graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ pooltogether/polygon-twab-rewards subgraph.polygon.yaml",
+        "deploy:avalanche": "graph deploy --product hosted-service --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ pooltogether/avalanche-twab-rewards subgraph.avalanche.yaml",
+        "all-polygon": "yarn clean && yarn prepare:polygon && yarn gen:polygon && yarn deploy:polygon",
+        "all-mainnet": "yarn clean && yarn prepare:mainnet && yarn gen:mainnet && yarn deploy:mainnet",
+        "all-avalanche": "yarn clean && yarn prepare:avalanche && yarn gen:avalanche && yarn deploy:avalanche",
+        "build:mainnet": "graph build subgraph.mainnet.yaml",
+        "build:polygon": "graph build subgraph.polygon.yaml",
+        "build:avalanche": "graph build subgraph.avalanche.yaml",
+        "auth": "graph auth https://api.thegraph.com/deploy/",
+        "tag-release": "PACKAGE_VERSION=$(./scripts/package-version.sh) && git tag -ae v$PACKAGE_VERSION && git push --tags",
+        "test": "yarn clean && yarn prepare:polygon && yarn gen:polygon && cp subgraph.polygon.yaml subgraph.yaml && graph test"
+    },
+    "dependencies": {
+        "@graphprotocol/graph-cli": "0.29.0",
+        "@graphprotocol/graph-ts": "0.26.0",
+        "@pooltogether/v4-periphery": "1.2.3",
+        "matchstick-as": "0.4.2",
+        "mustache": "4.2.0"
+    },
+    "devDependencies": {
+        "prettier": "2.6.2"
+    }
+}

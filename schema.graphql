@@ -1,0 +1,24 @@
+type Ticket @entity {
+  id: ID! # ticket address
+  accounts: [Account!]! @derivedFrom(field: "ticket")
+  promotions: [Promotion!]! @derivedFrom(field: "ticket")
+}
+
+type Promotion @entity {
+  id: ID! # promotion id
+  creator: Account! # account who created the promotion
+  createdAt: BigInt! # timestamp at which the promotion was created
+  startTimestamp: BigInt! # timestamp at which the promotion starts
+  numberOfEpochs: BigInt! # number of epochs the promotion lasts
+  epochDuration: BigInt! # duration of each epoch in seconds
+  tokensPerEpoch: BigInt! # number of tokens to be distributed per epoch
+  rewardsUnclaimed: BigInt! # number of tokens that have not been claimed yet
+  token: Bytes! # address of the token distributed as rewards
+  ticket: Ticket # ticket to which the promotion is associated
+}
+
+type Account @entity {
+  id: ID! # account address
+  promotions: [Promotion!]! @derivedFrom(field: "creator") # promotions created by the account
+  ticket: Ticket
+}
