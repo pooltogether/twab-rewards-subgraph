@@ -10,9 +10,9 @@ import {
   recipientAddress,
   tokenAddress,
 } from './helpers/assertField';
-import { createPromotionCreatedEvent, createPromotionDestroyedEvent, createPromotionEndedEvent } from './helpers/mockedEvent';
+import { createPromotionCreatedEvent, createPromotionDestroyedEvent, createPromotionEndedEvent, createPromotionExtendedEvent } from './helpers/mockedEvent';
 import { mockGetPromotionFunction, mockTicketFunction } from './helpers/mockedFunction';
-import { handlePromotionCreated, handlePromotionDestroyed, handlePromotionEnded } from '../src/mappings/TWABRewards';
+import { handlePromotionCreated, handlePromotionDestroyed, handlePromotionEnded, handlePromotionExtended } from '../src/mappings/TWABRewards';
 import { Account, Promotion, Ticket } from '../generated/schema';
 import { PromotionCreated, TWABRewards } from '../generated/TWABRewards/TWABRewards';
 
@@ -159,6 +159,59 @@ test('should handlePromotionDestroyed', () => {
     ticketAddress,
     null,
     promotionDestroyedEvent.block.timestamp,
+  );
+
+  clearStore();
+});
+
+test('should handlePromotionExtended', () => {
+  createPromotion();
+
+  // We extend the promotion by 12 epochs
+  const promotionExtendedEvent = createPromotionExtendedEvent(
+    promotionId,
+    numberOfEpochs
+  );
+
+  mockGetPromotionFunction(
+    promotionExtendedEvent,
+    BigInt.fromI32(promotionId),
+    creatorAddress,
+    BigInt.fromI32(startTimestamp),
+    BigInt.fromI32(numberOfEpochs * 2),
+    BigInt.fromI32(epochDuration),
+    BigInt.fromI32(createdAt),
+    tokenAddress,
+    BigInt.fromI32(tokensPerEpoch),
+    BigInt.fromI32(rewardsUnclaimed * 2),
+  );
+
+  handlePromotionExtended(promotionExtendedEvent);
+
+  const twabRewardsContract = TWABRewards.bind(promotionExtendedEvent.address);
+  const ticketAddress = twabRewardsContract.ticket();
+
+  const ticket = Ticket.load(ticketAddress.toHexString()) as Ticket;
+  assertTicketFields(ticket.id);
+
+  const creatorAccount = Account.load(creatorAccountId) as Account;
+  assertAccountFields(creatorAccount.id, ticketAddress);
+
+  const promotion = Promotion.load(
+    promotionExtendedEvent.params.promotionId.toHexString(),
+  ) as Promotion;
+
+  assertPromotionFields(
+    promotion.id,
+    creatorAccount.id,
+    createdAt,
+    startTimestamp,
+    numberOfEpochs * 2,
+    epochDuration,
+    tokensPerEpoch,
+    rewardsUnclaimed * 2,
+    tokenAddress,
+    ticketAddress,
   );
 
   clearStore();
