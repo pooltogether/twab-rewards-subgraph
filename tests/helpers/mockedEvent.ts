@@ -1,7 +1,7 @@
 import { Address, ethereum } from '@graphprotocol/graph-ts';
 import { newMockEvent } from 'matchstick-as/assembly/index';
 
-import { PromotionCreated, PromotionEnded } from '../../generated/TWABRewards/TWABRewards';
+import { PromotionCreated, PromotionDestroyed, PromotionEnded } from '../../generated/TWABRewards/TWABRewards';
 
 export function createPromotionCreatedEvent(promotionId: i32): PromotionCreated {
   const mockEvent = newMockEvent();
@@ -71,4 +71,42 @@ export function createPromotionEndedEvent(
   promotionEndedEvent.parameters.push(epochNumberParam);
 
   return promotionEndedEvent;
+}
+
+export function createPromotionDestroyedEvent(
+  promotionId: i32,
+  recipient: Address,
+  amount: i32,
+): PromotionDestroyed {
+  const mockEvent = newMockEvent();
+
+  const promotionDestroyedEvent = new PromotionDestroyed(
+    mockEvent.address,
+    mockEvent.logIndex,
+    mockEvent.transactionLogIndex,
+    mockEvent.logType,
+    mockEvent.block,
+    mockEvent.transaction,
+    mockEvent.parameters,
+  );
+
+  promotionDestroyedEvent.parameters = new Array();
+
+  const promotionIdParam = new ethereum.EventParam(
+    'promotionId',
+    ethereum.Value.fromI32(promotionId),
+  );
+
+  const recipientParam = new ethereum.EventParam(
+    'recipient',
+    ethereum.Value.fromAddress(recipient),
+  );
+
+  const amountParam = new ethereum.EventParam('amount', ethereum.Value.fromI32(amount));
+
+  promotionDestroyedEvent.parameters.push(promotionIdParam);
+  promotionDestroyedEvent.parameters.push(recipientParam);
+  promotionDestroyedEvent.parameters.push(amountParam);
+
+  return promotionDestroyedEvent;
 }

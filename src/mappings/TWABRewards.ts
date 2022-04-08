@@ -1,9 +1,10 @@
 import {
   PromotionCreated,
+  PromotionDestroyed,
   PromotionEnded,
   TWABRewards,
 } from '../../generated/TWABRewards/TWABRewards';
-import { setPromotion, setPromotionEndedAt, setTicket } from '../helpers/promotion';
+import { setPromotion, setPromotionDestroyedAt, setPromotionEndedAt, setTicket } from '../helpers/promotion';
 import { loadOrCreateAccount } from '../helpers/loadOrCreateAccount';
 import { loadOrCreatePromotion } from '../helpers/loadOrCreatePromotion';
 import { loadOrCreateTicket } from '../helpers/loadOrCreateTicket';
@@ -37,6 +38,27 @@ export function handlePromotionEnded(event: PromotionEnded): void {
   const promotionInfo = twabRewardsContract.getPromotion(promotionId);
   setPromotion(promotion, promotionInfo);
   setPromotionEndedAt(promotion, event.block.timestamp);
+
+  const ticketAddress = twabRewardsContract.ticket();
+  loadOrCreateTicket(ticketAddress.toHexString());
+
+  const creator = loadOrCreateAccount(promotionInfo.creator.toHexString());
+  setTicket(creator, ticketAddress);
+  setTicket(promotion, ticketAddress);
+
+  creator.save();
+  promotion.save();
+}
+
+export function handlePromotionDestroyed(event: PromotionDestroyed): void {
+  const promotionId = event.params.promotionId;
+
+  const twabRewardsContract = TWABRewards.bind(event.address);
+  const promotion = loadOrCreatePromotion(promotionId.toHexString());
+
+  const promotionInfo = twabRewardsContract.getPromotion(promotionId);
+  setPromotion(promotion, promotionInfo);
+  setPromotionDestroyedAt(promotion, event.block.timestamp);
 
   const ticketAddress = twabRewardsContract.ticket();
   loadOrCreateTicket(ticketAddress.toHexString());

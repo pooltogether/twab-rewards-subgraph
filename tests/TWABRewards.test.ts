@@ -10,9 +10,9 @@ import {
   recipientAddress,
   tokenAddress,
 } from './helpers/assertField';
-import { createPromotionCreatedEvent, createPromotionEndedEvent } from './helpers/mockedEvent';
+import { createPromotionCreatedEvent, createPromotionDestroyedEvent, createPromotionEndedEvent } from './helpers/mockedEvent';
 import { mockGetPromotionFunction, mockTicketFunction } from './helpers/mockedFunction';
-import { handlePromotionCreated, handlePromotionEnded } from '../src/mappings/TWABRewards';
+import { handlePromotionCreated, handlePromotionDestroyed, handlePromotionEnded } from '../src/mappings/TWABRewards';
 import { Account, Promotion, Ticket } from '../generated/schema';
 import { PromotionCreated, TWABRewards } from '../generated/TWABRewards/TWABRewards';
 
@@ -116,6 +116,49 @@ test('should handlePromotionEnded', () => {
     tokenAddress,
     ticketAddress,
     promotionEndedEvent.block.timestamp,
+  );
+
+  clearStore();
+});
+
+test('should handlePromotionDestroyed', () => {
+  createPromotion();
+
+  // We destroy the promotion after the end of the last epoch
+  const promotionDestroyedEvent = createPromotionDestroyedEvent(
+    promotionId,
+    recipientAddress,
+    rewardsUnclaimed,
+  );
+
+  handlePromotionDestroyed(promotionDestroyedEvent);
+
+  const twabRewardsContract = TWABRewards.bind(promotionDestroyedEvent.address);
+  const ticketAddress = twabRewardsContract.ticket();
+
+  const ticket = Ticket.load(ticketAddress.toHexString()) as Ticket;
+  assertTicketFields(ticket.id);
+
+  const creatorAccount = Account.load(creatorAccountId) as Account;
+  assertAccountFields(creatorAccount.id, ticketAddress);
+
+  const promotion = Promotion.load(
+    promotionDestroyedEvent.params.promotionId.toHexString(),
+  ) as Promotion;
+
+  assertPromotionFields(
+    promotion.id,
+    creatorAccount.id,
+    createdAt,
+    startTimestamp,
+    numberOfEpochs,
+    epochDuration,
+    tokensPerEpoch,
+    rewardsUnclaimed,
+    tokenAddress,
+    ticketAddress,
+    null,
+    promotionDestroyedEvent.block.timestamp,
   );
 
   clearStore();
