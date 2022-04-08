@@ -1,8 +1,11 @@
-import { Address } from '@graphprotocol/graph-ts';
+import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { assert } from 'matchstick-as/assembly/index';
 
 export const creatorAddress = Address.fromString('0x897ea87eC79b9Fe5425f9f6c072c5Aa467bAdB0f');
 export const creatorAccountId = creatorAddress.toHexString();
+
+export const recipientAddress = Address.fromString('0x4D0F63398Ead972E11731E1EFb6A8E18307c787F');
+export const recipientAccountId = recipientAddress.toHexString();
 
 export const ticketAddress = Address.fromString('0x793e45332B7976Ead76E789A4876c68b5AB8430c');
 export const tokenAddress = Address.fromString('0x03503F0D6013358D855634D2B58Baf6da132cD30');
@@ -23,10 +26,21 @@ export const assertPromotionFields = (
   rewardsUnclaimed: i32,
   token: Address,
   ticket: Address,
+  endedAt: BigInt | null = null,
+  destroyedAt: BigInt | null = null,
 ): void => {
   assert.fieldEquals('Promotion', promotionId, 'id', promotionId);
   assert.fieldEquals('Promotion', promotionId, 'creator', creatorId);
   assert.fieldEquals('Promotion', promotionId, 'createdAt', createdAt.toString());
+
+  if (endedAt) {
+    assert.fieldEquals('Promotion', promotionId, 'endedAt', endedAt.toString());
+  }
+
+  if (destroyedAt) {
+    assert.fieldEquals('Promotion', promotionId, 'destroyedAt', destroyedAt.toString());
+  }
+
   assert.fieldEquals('Promotion', promotionId, 'startTimestamp', startTimestamp.toString());
   assert.fieldEquals('Promotion', promotionId, 'numberOfEpochs', numberOfEpochs.toString());
   assert.fieldEquals('Promotion', promotionId, 'epochDuration', epochDuration.toString());

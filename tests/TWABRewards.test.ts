@@ -7,11 +7,12 @@ import {
   assertTicketFields,
   creatorAccountId,
   creatorAddress,
+  recipientAddress,
   tokenAddress,
 } from './helpers/assertField';
-import { createPromotionCreatedEvent } from './helpers/mockedEvent';
+import { createPromotionCreatedEvent, createPromotionEndedEvent } from './helpers/mockedEvent';
 import { mockGetPromotionFunction, mockTicketFunction } from './helpers/mockedFunction';
-import { handlePromotionCreated } from '../src/mappings/TWABRewards';
+import { handlePromotionCreated, handlePromotionEnded } from '../src/mappings/TWABRewards';
 import { Account, Promotion, Ticket } from '../generated/schema';
 import { PromotionCreated, TWABRewards } from '../generated/TWABRewards/TWABRewards';
 
@@ -72,6 +73,49 @@ test('should handlePromotionCreated', () => {
     rewardsUnclaimed,
     tokenAddress,
     ticketAddress,
+  );
+
+  clearStore();
+});
+
+test('should handlePromotionEnded', () => {
+  createPromotion();
+
+  // We end the promotion during the first epoch
+  const promotionEndedEvent = createPromotionEndedEvent(
+    promotionId,
+    recipientAddress,
+    rewardsUnclaimed - tokensPerEpoch,
+    1,
+  );
+
+  handlePromotionEnded(promotionEndedEvent);
+
+  const twabRewardsContract = TWABRewards.bind(promotionEndedEvent.address);
+  const ticketAddress = twabRewardsContract.ticket();
+
+  const ticket = Ticket.load(ticketAddress.toHexString()) as Ticket;
+  assertTicketFields(ticket.id);
+
+  const creatorAccount = Account.load(creatorAccountId) as Account;
+  assertAccountFields(creatorAccount.id, ticketAddress);
+
+  const promotion = Promotion.load(
+    promotionEndedEvent.params.promotionId.toHexString(),
+  ) as Promotion;
+
+  assertPromotionFields(
+    promotion.id,
+    creatorAccount.id,
+    createdAt,
+    startTimestamp,
+    numberOfEpochs,
+    epochDuration,
+    tokensPerEpoch,
+    rewardsUnclaimed,
+    tokenAddress,
+    ticketAddress,
+    promotionEndedEvent.block.timestamp,
   );
 
   clearStore();

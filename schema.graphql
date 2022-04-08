@@ -8,6 +8,8 @@ type Promotion @entity {
   id: ID! # promotion id
   creator: Account! # account who created the promotion
   createdAt: BigInt! # timestamp at which the promotion was created
+  endedAt: BigInt # timestamp at which the promotion was ended
+  destroyedAt: BigInt # timestamp at which the promotion was destroyed
   startTimestamp: BigInt! # timestamp at which the promotion starts
   numberOfEpochs: BigInt! # number of epochs the promotion lasts
   epochDuration: BigInt! # duration of each epoch in seconds

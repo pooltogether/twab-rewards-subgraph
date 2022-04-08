@@ -17,6 +17,20 @@ export function setPromotion(
   promotion.token = promotionInfo.token;
 }
 
+export function setPromotionEndedAt(
+  promotion: Promotion,
+  endedAt: BigInt,
+): void {
+  promotion.endedAt = endedAt;
+}
+
+export function setPromotionDestroyedAt(
+  promotion: Promotion,
+  destroyedAt: BigInt,
+): void {
+  promotion.destroyedAt = destroyedAt;
+}
+
 export function setTicket<Entity>(entity: Entity, ticket: Address): void {
   // If just created set ticket field
   if (entity.ticket == null) {

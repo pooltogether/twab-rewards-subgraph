@@ -23,5 +23,7 @@ dataSources:
       eventHandlers:
         - event: PromotionCreated(indexed uint256)
           handler: handlePromotionCreated
+        - event: PromotionEnded(indexed uint256,indexed address,uint256,uint8)
+          handler: handlePromotionEnded
     {{/TWABRewards}}
 
