@@ -22,5 +22,13 @@ type Promotion @entity {
 type Account @entity {
   id: ID! # account address
   promotions: [Promotion!]! @derivedFrom(field: "creator") # promotions created by the account
+  claimedPromotions: [ClaimedPromotion!]! @derivedFrom(field: "account") # ids of promotions that have been claimed by the account
   ticket: Ticket
+}
+
+type ClaimedPromotion @entity {
+  id: ID! # composite id of the account address + promotion id
+  account: Account! # account that has claimed the promotion
+  epochs: [BigInt!] # epochs from the promotion that have been claimed by the account
+  rewards: BigInt! # total amount of rewards that have been claimed by the account
 }

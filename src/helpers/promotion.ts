@@ -1,4 +1,4 @@
-import { Address, BigInt } from '@graphprotocol/graph-ts';
+import { BigInt } from '@graphprotocol/graph-ts';
 
 import { Promotion } from '../../generated/schema';
 import { TWABRewards__getPromotionResultValue0Struct } from '../../generated/TWABRewards/TWABRewards';
@@ -29,11 +29,4 @@ export function setPromotionDestroyedAt(
   destroyedAt: BigInt,
 ): void {
   promotion.destroyedAt = destroyedAt;
-}
-
-export function setTicket<Entity>(entity: Entity, ticket: Address): void {
-  // If just created set ticket field
-  if (entity.ticket == null) {
-    entity.ticket = ticket.toHexString();
-  }
 }

@@ -7,6 +7,9 @@ export const creatorAccountId = creatorAddress.toHexString();
 export const recipientAddress = Address.fromString('0x4D0F63398Ead972E11731E1EFb6A8E18307c787F');
 export const recipientAccountId = recipientAddress.toHexString();
 
+export const userAddress = Address.fromString('0x6DeFcD0a83bc6f9a70510d0186456eD9b22B1850');
+export const userAccountId = userAddress.toHexString();
+
 export const ticketAddress = Address.fromString('0x793e45332B7976Ead76E789A4876c68b5AB8430c');
 export const tokenAddress = Address.fromString('0x03503F0D6013358D855634D2B58Baf6da132cD30');
 
@@ -48,6 +51,18 @@ export const assertPromotionFields = (
   assert.fieldEquals('Promotion', promotionId, 'rewardsUnclaimed', rewardsUnclaimed.toString());
   assert.fieldEquals('Promotion', promotionId, 'token', token.toHexString());
   assert.fieldEquals('Promotion', promotionId, 'ticket', ticket.toHexString());
+};
+
+export const assertClaimedPromotionFields = (
+  id: string,
+  accountId: string,
+  epochs: string,
+  rewards: i32,
+): void => {
+  assert.fieldEquals('ClaimedPromotion', id, 'id', id);
+  assert.fieldEquals('ClaimedPromotion', id, 'account', accountId);
+  assert.fieldEquals('ClaimedPromotion', id, 'epochs', epochs);
+  assert.fieldEquals('ClaimedPromotion', id, 'rewards', rewards.toString());
 };
 
 export const assertTicketFields = (ticketId: string): void => {
