@@ -19,7 +19,7 @@ dataSources:
         - TWABRewards
       abis:
         - name: TWABRewards
-          file: "./node_modules/@pooltogether/v4-periphery/abis/TWABRewards.json"
+          file: "./abis/TWABRewards.json"
       eventHandlers:
         - event: PromotionCreated(indexed uint256)
           handler: handlePromotionCreated
