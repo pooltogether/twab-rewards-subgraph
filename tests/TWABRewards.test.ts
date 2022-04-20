@@ -254,12 +254,15 @@ test('should handleRewardsClaimed', () => {
   const ticket = Ticket.load(ticketAddress.toHexString()) as Ticket;
   assertTicketFields(ticket.id);
 
-  const creatorAccount = Account.load(creatorAccountId) as Account;
-  assertAccountFields(creatorAccount.id, ticketAddress);
+  const userAccount = Account.load(userAccountId) as Account;
+  assertAccountFields(userAccount.id, ticketAddress);
 
   const promotion = Promotion.load(
     rewardsClaimedEvent.params.promotionId.toHexString(),
   ) as Promotion;
+
+
+  const creatorAccount = Account.load(creatorAccountId) as Account;
 
   assertPromotionFields(
     promotion.id,
@@ -280,8 +283,9 @@ test('should handleRewardsClaimed', () => {
     claimedPromotionId,
     userAccountId,
     '[0, 1, 2, 3, 4, 5]',
-    rewardsClaimed
-  )
+    rewardsClaimed,
+    ticketAddress
+  );
 
   clearStore();
 });

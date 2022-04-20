@@ -117,7 +117,8 @@ export function handleRewardsClaimed(event: RewardsClaimed): void {
   loadOrCreateTicket(ticketAddress.toHexString());
 
   const account = loadOrCreateAccount(user.toHexString());
-  setTicket(promotion, ticketAddress);
+  setTicket(account, ticketAddress);
+  setTicket(claimedPromotion, ticketAddress);
 
   account.save();
   claimedPromotion.save();

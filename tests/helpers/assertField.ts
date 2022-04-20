@@ -58,11 +58,13 @@ export const assertClaimedPromotionFields = (
   accountId: string,
   epochs: string,
   rewards: i32,
+  ticket: Address,
 ): void => {
   assert.fieldEquals('ClaimedPromotion', id, 'id', id);
   assert.fieldEquals('ClaimedPromotion', id, 'account', accountId);
   assert.fieldEquals('ClaimedPromotion', id, 'epochs', epochs);
   assert.fieldEquals('ClaimedPromotion', id, 'rewards', rewards.toString());
+  assert.fieldEquals('ClaimedPromotion', id, 'ticket', ticket.toHexString());
 };
 
 export const assertTicketFields = (ticketId: string): void => {
