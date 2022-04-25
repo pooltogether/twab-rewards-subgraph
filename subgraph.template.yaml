@@ -1,0 +1,34 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  {{#TWABRewards}}
+  - name: TWABRewards
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      address: "{{TWABRewards.address}}"
+      abi: TWABRewards
+      startBlock: {{TWABRewards.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/TWABRewards.ts
+      entities:
+        - TWABRewards
+      abis:
+        - name: TWABRewards
+          file: "./abis/TWABRewards.json"
+      eventHandlers:
+        - event: PromotionCreated(indexed uint256)
+          handler: handlePromotionCreated
+        - event: PromotionEnded(indexed uint256,indexed address,uint256,uint8)
+          handler: handlePromotionEnded
+        - event: PromotionDestroyed(indexed uint256,indexed address,uint256)
+          handler: handlePromotionDestroyed
+        - event: PromotionExtended(indexed uint256,uint256)
+          handler: handlePromotionExtended
+        - event: RewardsClaimed(indexed uint256,uint8[],indexed address,uint256)
+          handler: handleRewardsClaimed
+    {{/TWABRewards}}
