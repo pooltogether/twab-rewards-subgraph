@@ -1,0 +1,7 @@
+{
+  "network": "optimism",
+  "TWABRewards": {
+    "address": "0x1470c87e2db5247A36C60DE3D65D7C972C62EA0f",
+    "startBlock": "14043069"
+  }
+}
