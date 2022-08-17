@@ -1,7 +1,0 @@
-{
-  "network": "optimism-kovan",
-  "TWABRewards": {
-    "address": "0x6176776490147b41813C1a0e342080d2CAA4e618",
-    "startBlock": "4614926"
-  }
-}
