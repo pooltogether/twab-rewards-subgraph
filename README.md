@@ -23,14 +23,15 @@ Mainnet:
 yarn prepare:mainnet
 yarn prepare:polygon
 yarn prepare:avalanche
+yarn prepare:optimism
 ```
 
 Testnet:
 ```
-yarn prepare:rinkeby
+yarn prepare:goerli
 yarn prepare:mumbai
 yarn prepare:fuji
-yarn prepare:optimism-kovan
+yarn prepare:optimism-goerli
 ```
 
 ### Schemas
@@ -42,14 +43,15 @@ Mainnet:
 yarn gen:mainnet
 yarn gen:polygon
 yarn gen:avalanche
+yarn gen:optimism
 ```
 
 Testnet:
 ```
-yarn gen:rinkeby
+yarn gen:goerli
 yarn gen:mumbai
 yarn gen:fuji
-yarn gen:optimism-kovan
+yarn gen:optimism-goerli
 ```
 
 ### Tests
@@ -67,14 +69,15 @@ Mainnet:
 yarn deploy:mainnet
 yarn deploy:polygon
 yarn deploy:avalanche
+yarn deploy:optimism
 ```
 
 Testnet:
 ```
-yarn deploy:rinkeby
+yarn deploy:goerli
 yarn deploy:mumbai
 yarn deploy:fuji
-yarn deploy:optimism-kovan
+yarn deploy:optimism-goerli
 ```
 
 ### Build and deploy
@@ -86,14 +89,15 @@ Mainnet:
 yarn all-mainnet
 yarn all-polygon
 yarn all-avalanche
+yarn all-optimism
 ```
 
 Testnet:
 ```
-yarn all-rinkeby
+yarn all-goerli
 yarn all-mumbai
 yarn all-fuji
-yarn all-optimism-kovan
+yarn all-optimism-goerli
 ```
 
 ### Hosted Subgraphs
@@ -104,9 +108,10 @@ Mainnet:
 - https://thegraph.com/hosted-service/subgraph/pooltogether/mainnet-twab-rewards
 - https://thegraph.com/hosted-service/subgraph/pooltogether/polygon-twab-rewards
 - https://thegraph.com/hosted-service/subgraph/pooltogether/avalanche-twab-rewards
+- https://thegraph.com/hosted-service/subgraph/pooltogether/optimism-twab-rewards
 
 Testnet:
-- https://thegraph.com/hosted-service/subgraph/pooltogether/rinkeby-twab-rewards
+- https://thegraph.com/hosted-service/subgraph/pooltogether/goerli-twab-rewards
 - https://thegraph.com/hosted-service/subgraph/pooltogether/mumbai-twab-rewards
 - https://thegraph.com/hosted-service/subgraph/pooltogether/fuji-twab-rewards
-- https://thegraph.com/hosted-service/subgraph/pooltogether/optimism-kovan-twab-rewards
+- https://thegraph.com/hosted-service/subgraph/pooltogether/optimism-goerli-twab-rewards
