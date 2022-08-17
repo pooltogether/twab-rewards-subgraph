@@ -27,7 +27,7 @@ yarn prepare:avalanche
 
 Testnet:
 ```
-yarn prepare:rinkeby
+yarn prepare:goerli
 yarn prepare:mumbai
 yarn prepare:fuji
 yarn prepare:optimism-kovan
@@ -46,7 +46,7 @@ yarn gen:avalanche
 
 Testnet:
 ```
-yarn gen:rinkeby
+yarn gen:goerli
 yarn gen:mumbai
 yarn gen:fuji
 yarn gen:optimism-kovan
@@ -71,7 +71,7 @@ yarn deploy:avalanche
 
 Testnet:
 ```
-yarn deploy:rinkeby
+yarn deploy:goerli
 yarn deploy:mumbai
 yarn deploy:fuji
 yarn deploy:optimism-kovan
@@ -90,7 +90,7 @@ yarn all-avalanche
 
 Testnet:
 ```
-yarn all-rinkeby
+yarn all-goerli
 yarn all-mumbai
 yarn all-fuji
 yarn all-optimism-kovan
@@ -106,7 +106,7 @@ Mainnet:
 - https://thegraph.com/hosted-service/subgraph/pooltogether/avalanche-twab-rewards
 
 Testnet:
-- https://thegraph.com/hosted-service/subgraph/pooltogether/rinkeby-twab-rewards
+- https://thegraph.com/hosted-service/subgraph/pooltogether/goerli-twab-rewards
 - https://thegraph.com/hosted-service/subgraph/pooltogether/mumbai-twab-rewards
 - https://thegraph.com/hosted-service/subgraph/pooltogether/fuji-twab-rewards
 - https://thegraph.com/hosted-service/subgraph/pooltogether/optimism-kovan-twab-rewards
