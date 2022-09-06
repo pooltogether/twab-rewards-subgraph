@@ -281,6 +281,7 @@ test('should handleRewardsClaimed', () => {
 
   assertClaimedPromotionFields(
     claimedPromotionId,
+    rewardsClaimedEvent.params.promotionId,
     userAccountId,
     '[0, 1, 2, 3, 4, 5]',
     rewardsClaimed,

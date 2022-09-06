@@ -28,6 +28,7 @@ type Account @entity {
 
 type ClaimedPromotion @entity {
   id: ID! # composite id of the account address + promotion id
+  promotionId: BigInt! # ID of the promotion that was claimed
   account: Account! # account that has claimed the promotion
   epochs: [BigInt!] # epochs from the promotion that have been claimed by the account
   rewards: BigInt! # total amount of rewards that have been claimed by the account

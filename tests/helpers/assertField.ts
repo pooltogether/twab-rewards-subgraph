@@ -55,12 +55,14 @@ export const assertPromotionFields = (
 
 export const assertClaimedPromotionFields = (
   id: string,
+  promotionId: BigInt,
   accountId: string,
   epochs: string,
   rewards: i32,
   ticket: Address,
 ): void => {
   assert.fieldEquals('ClaimedPromotion', id, 'id', id);
+  assert.fieldEquals('ClaimedPromotion', id, 'promotionId', promotionId.toString());
   assert.fieldEquals('ClaimedPromotion', id, 'account', accountId);
   assert.fieldEquals('ClaimedPromotion', id, 'epochs', epochs);
   assert.fieldEquals('ClaimedPromotion', id, 'rewards', rewards.toString());

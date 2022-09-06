@@ -105,7 +105,7 @@ export function handleRewardsClaimed(event: RewardsClaimed): void {
 
   const claimedPromotionId = generateCompositeId(user.toHexString(), promotionId.toHexString());
   const claimedPromotion = loadOrCreateClaimedPromotion(claimedPromotionId);
-  setClaimedPromotion(claimedPromotion, user, epochIds, amount);
+  setClaimedPromotion(claimedPromotion, promotionId, user, epochIds, amount);
 
   const twabRewardsContract = TWABRewards.bind(event.address);
   const promotion = loadOrCreatePromotion(promotionId.toHexString());

@@ -5,10 +5,12 @@ import { ZERO } from './common';
 
 export function setClaimedPromotion(
   claimedPromotion: ClaimedPromotion,
+  promotionId: BigInt,
   user: Address,
   epochIds: i32[],
   amount: BigInt,
 ): void {
+  claimedPromotion.promotionId = promotionId;
   claimedPromotion.account = user.toHexString();
 
   if (claimedPromotion.epochs) {
