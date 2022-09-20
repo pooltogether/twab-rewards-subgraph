@@ -1,0 +1,7 @@
+{
+  "network": "arbitrum-goerli",
+  "TWABRewards": {
+    "address": "0x44D8dd18518FCc6f172E79ec871684F0AC5f94Ef",
+    "startBlock": "115090"
+  }
+}
