@@ -32,6 +32,7 @@ yarn prepare:goerli
 yarn prepare:mumbai
 yarn prepare:fuji
 yarn prepare:optimism-goerli
+yarn prepare:arbitrum-goerli
 ```
 
 ### Schemas
@@ -52,6 +53,7 @@ yarn gen:goerli
 yarn gen:mumbai
 yarn gen:fuji
 yarn gen:optimism-goerli
+yarn gen:arbitrum-goerli
 ```
 
 ### Tests
@@ -78,6 +80,7 @@ yarn deploy:goerli
 yarn deploy:mumbai
 yarn deploy:fuji
 yarn deploy:optimism-goerli
+yarn deploy:arbitrum-goerli
 ```
 
 ### Build and deploy
@@ -98,6 +101,7 @@ yarn all-goerli
 yarn all-mumbai
 yarn all-fuji
 yarn all-optimism-goerli
+yarn all-arbitrum-goerli
 ```
 
 ### Hosted Subgraphs
@@ -115,3 +119,4 @@ Testnet:
 - https://thegraph.com/hosted-service/subgraph/pooltogether/mumbai-twab-rewards
 - https://thegraph.com/hosted-service/subgraph/pooltogether/fuji-twab-rewards
 - https://thegraph.com/hosted-service/subgraph/pooltogether/optimism-goerli-twab-rewards
+- https://thegraph.com/hosted-service/subgraph/pooltogether/arbitrum-goerli-twab-rewards
